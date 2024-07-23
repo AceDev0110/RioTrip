@@ -27,20 +27,25 @@ class BookstoreScaffold extends StatelessWidget {
         onDestinationSelected: (idx) {
           if (idx == 0) goRouter.go('/books/popular');
           if (idx == 1) goRouter.go('/authors');
-          if (idx == 2) goRouter.go('/settings');
+          if (idx == 2) goRouter.go('/authors');
+          if (idx == 3) goRouter.go('/settings');
         },
         destinations: const [
           AdaptiveScaffoldDestination(
-            title: 'Books',
+            title: 'Attractions',
+            icon: Icons.attractions,
+          ),
+          AdaptiveScaffoldDestination(
+            title: 'Alphabet',
+            icon: Icons.sort_by_alpha,
+          ),
+          AdaptiveScaffoldDestination(
+            title: 'Phrasebook',
             icon: Icons.book,
           ),
           AdaptiveScaffoldDestination(
-            title: 'Authors',
-            icon: Icons.person,
-          ),
-          AdaptiveScaffoldDestination(
-            title: 'Settings',
-            icon: Icons.settings,
+            title: 'Converter',
+            icon: Icons.currency_bitcoin,
           ),
         ],
       ),

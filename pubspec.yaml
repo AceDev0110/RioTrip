@@ -1,5 +1,5 @@
-name: bookstore
-description: Navigation and routing sample app
+name: RioTrip
+description: This app is for those who are traveling to Rio de Janeiro.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
@@ -23,8 +23,6 @@ dependencies:
       path: plugins/window_size
 
 dev_dependencies:
-  analysis_defaults:
-    path: ../analysis_defaults
   flutter_test:
     sdk: flutter
   test: ^1.24.0

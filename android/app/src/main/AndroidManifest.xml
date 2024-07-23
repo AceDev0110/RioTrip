@@ -1,6 +1,6 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.riotrip.novabbas">
     <application
-        android:label="navigation_and_routing"
+        android:label="Riotrip"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
