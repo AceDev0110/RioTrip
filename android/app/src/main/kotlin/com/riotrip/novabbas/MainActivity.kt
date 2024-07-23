@@ -1,4 +1,4 @@
-package dev.flutter.navigation_and_routing
+package com.riotrip.novabbas
 
 import io.flutter.embedding.android.FlutterActivity
 
