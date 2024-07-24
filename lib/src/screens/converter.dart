@@ -8,13 +8,13 @@ import '../data/author.dart';
 import '../data/library.dart';
 import '../widgets/author_list.dart';
 
-class AuthorsScreen extends StatelessWidget {
+class ConverterScreen extends StatelessWidget {
   final String title;
   final ValueChanged<Author> onTap;
 
-  const AuthorsScreen({
+  const ConverterScreen({
     required this.onTap,
-    this.title = 'Authors',
+    this.title = 'Converter',
     super.key,
   });
 
@@ -24,7 +24,7 @@ class AuthorsScreen extends StatelessWidget {
           title: Text(title),
         ),
         body: AuthorList(
-          authors: libraryInstance.allAuthors,
+          authors: libraryInstance.allConverter,
           onTap: onTap,
         ),
       );

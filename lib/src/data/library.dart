@@ -30,6 +30,10 @@ final libraryInstance = Library()
 class Library {
   final List<Book> allBooks = [];
   final List<Author> allAuthors = [];
+  final List<Author>  allAlphabet = [];
+  final List<Author>  allAttractions = [];
+  final List<Author>  allConverter = [];
+  final List<Author>  allPhrasebook = [];
 
   void addBook({
     required String title,
