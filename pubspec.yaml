@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
+  flutter_html: ^3.0.0-beta.2 
   go_router: ^14.0.0
   path_to_regexp: ^0.4.0
   quiver: ^3.1.0

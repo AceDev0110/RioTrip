@@ -14,3 +14,6 @@ const Color locationColor = Color.fromRGBO(255, 207, 12, 1);
 // for alphabet
 const Color alphabetBackgroundColor = Color.fromRGBO(255, 255, 255, 0.1);
 const Color pronaunceColor = Color.fromRGBO(255, 207, 12, 1);
+
+// for phrasebook
+const Color phraseSelectionColor = Color.fromRGBO(254, 159, 6, 1);
