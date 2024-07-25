@@ -6,26 +6,26 @@ class AttractionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String currentRoute = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath; 
+    final String currentRoute = GoRouter.of(context).routerDelegate.currentConfiguration.fullPath;
 
     return Positioned(
       bottom: 20,
       left: 20,
       right: 20,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(
-            flex: 1,
+          Expanded(
             child: SizedBox(
               height: 50, // Ensure height consistency
               child: ElevatedButton.icon(
-                icon: Icon(Icons.map),
                 label: Text('Map'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: currentRoute == '/attractions/map'
                       ? Colors.orange
-                      : Color.fromARGB(255, 126, 126, 126),
+                      : Color.fromARGB(255, 197, 197, 197),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2), // Set border radius to 2
+                  ),
                 ),
                 onPressed: () {
                   GoRouter.of(context).go('/attractions/map');
@@ -33,18 +33,19 @@ class AttractionButtons extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 20), // Add gap between buttons
-          Flexible(
-            flex: 1,
+          SizedBox(width: 10), // Reduce the gap between buttons
+          Expanded(
             child: SizedBox(
               height: 50, // Ensure height consistency
               child: ElevatedButton.icon(
-                icon: Icon(Icons.list),
                 label: Text('List'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: currentRoute == '/attractions/list'
-                      ? Colors.yellow
-                      : Colors.white,
+                      ? Colors.orange
+                      : Color.fromARGB(255, 197, 197, 197),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(2), // Set border radius to 2
+                  ),
                 ),
                 onPressed: () {
                   GoRouter.of(context).go('/attractions/list');
