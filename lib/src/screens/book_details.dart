@@ -27,9 +27,6 @@ class BookDetailsScreen extends StatelessWidget {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(book!.title),
-      ),
       body: Center(
         child: Column(
           children: [

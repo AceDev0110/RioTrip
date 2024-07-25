@@ -14,17 +14,14 @@ class PhrasebookScreen extends StatelessWidget {
 
   const PhrasebookScreen({
     required this.onTap,
-    this.title = 'Phrasebook',
+    this.title = 'Converter',
     super.key,
   });
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
         body: AuthorList(
-          authors: libraryInstance.allPhrasebook,
+          authors: libraryInstance.allConverter,
           onTap: onTap,
         ),
       );

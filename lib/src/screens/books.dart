@@ -42,7 +42,6 @@ class _BooksScreenState extends State<BooksScreen>
     _tabController.index = widget.selectedIndex;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Books'),
         bottom: TabBar(
           controller: _tabController,
           tabs: const [

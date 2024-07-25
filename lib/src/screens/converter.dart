@@ -20,9 +20,6 @@ class ConverterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
         body: AuthorList(
           authors: libraryInstance.allConverter,
           onTap: onTap,

@@ -20,9 +20,6 @@ class AuthorsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
         body: AuthorList(
           authors: libraryInstance.allAuthors,
           onTap: onTap,

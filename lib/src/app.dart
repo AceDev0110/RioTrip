@@ -3,7 +3,8 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:RioTrip/src/screens/alphabet.dart';
-import 'package:RioTrip/src/screens/attractions.dart';
+import 'package:RioTrip/src/screens/attarctions/map.dart';
+import 'package:RioTrip/src/screens/attarctions/list.dart';
 import 'package:RioTrip/src/screens/converter.dart';
 import 'package:RioTrip/src/screens/phrasebook.dart';
 import 'package:RioTrip/src/screens/splash.dart';
@@ -11,19 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'auth.dart';
-import 'data.dart';
-import 'screens/author_details.dart';
-import 'screens/authors.dart';
-import 'screens/book_details.dart';
-import 'screens/books.dart';
 import 'screens/scaffold.dart';
-import 'screens/settings.dart';
-import 'screens/sign_in.dart';
-import 'widgets/book_list.dart';
 import 'widgets/fade_transition_page.dart';
+import 'theme/theme.dart';
 
 final appShellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'app shell');
-final booksNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'books shell');
 
 class Bookstore extends StatefulWidget {
   const Bookstore({super.key});
@@ -38,6 +31,7 @@ class _BookstoreState extends State<Bookstore> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme : appTheme,
       builder: (context, child) {
         if (child == null) {
           throw ('No child in .router constructor builder');
@@ -53,7 +47,7 @@ class _BookstoreState extends State<Bookstore> {
         initialLocation: '/splash',
         redirect: (context, state) {
           if (state.uri.toString() == '/') {
-            return '/attractions';
+            return '/attractions/map';
           }
           return null;
         },
@@ -63,7 +57,7 @@ class _BookstoreState extends State<Bookstore> {
             builder: (context, state, child) {
               return BookstoreScaffold(
                 selectedIndex: switch (state.uri.path) {
-                  var p when p.startsWith('/attractions') => 0,
+                  var p when p.startsWith('/attractions/map') => 0,
                   var p when p.startsWith('/alphabet') => 1,
                   var p when p.startsWith('/phrasebook') => 2,
                   var p when p.startsWith('/converter') => 3,
@@ -73,20 +67,33 @@ class _BookstoreState extends State<Bookstore> {
               );
             },
             routes: [
-              GoRoute(
-                path: '/attractions',
-                pageBuilder: (context, state) {
+              ShellRoute(
+                pageBuilder: (context, state, child) {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
-                    child: Builder(builder: (context) {
-                      return AttractionsScreen(
-                        onTap: (author) {
-                          GoRouter.of(context).go('/attractions');
-                        },
-                      );
-                    }),
+                    child: child
                   );
                 },
+                routes: [
+                  GoRoute(
+                    path: '/attractions/map',
+                    pageBuilder: (context, state) {
+                      return FadeTransitionPage<dynamic>(
+                        key: state.pageKey,
+                        child: AttractionsMapScreen(),
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: '/attractions/list',
+                    pageBuilder: (context, state) {
+                      return FadeTransitionPage<dynamic>(
+                        key: state.pageKey,
+                        child: AttractionsListScreen(),
+                      );
+                    },
+                  ),
+                ],
               ),
               GoRoute(
                 path: '/alphabet',
