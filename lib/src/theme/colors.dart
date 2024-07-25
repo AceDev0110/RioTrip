@@ -10,3 +10,7 @@ const Color placeBackgroundColor = Color.fromRGBO(26, 67, 137, 1);
 const Color titleColor = Colors.white;
 const Color descriptionColor = Color.fromARGB(255, 231, 231, 231);
 const Color locationColor = Color.fromRGBO(255, 207, 12, 1);
+
+// for alphabet
+const Color alphabetBackgroundColor = Color.fromRGBO(255, 255, 255, 0.1);
+const Color pronaunceColor = Color.fromRGBO(255, 207, 12, 1);

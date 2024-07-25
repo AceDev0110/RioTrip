@@ -101,11 +101,7 @@ class _BookstoreState extends State<Bookstore> {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
                     child: Builder(builder: (context) {
-                      return AlphabetScreen(
-                        onTap: (author) {
-                          GoRouter.of(context).go('/alphabet');
-                        },
-                      );
+                      return AlphabetScreen( );
                     }),
                   );
                 },
