@@ -17,3 +17,7 @@ const Color pronaunceColor = Color.fromRGBO(255, 207, 12, 1);
 
 // for phrasebook
 const Color phraseSelectionColor = Color.fromRGBO(254, 159, 6, 1);
+
+// for currencyconvert
+const Color toCurrencyColor = Color.fromRGBO(248, 203, 13, 1);
+const Color currencySelectionColor = Color.fromRGBO(254, 159, 6, 1);
