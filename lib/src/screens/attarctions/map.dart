@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart'; // Make sure to import go_router
 
-import '../../data/author.dart';
 import '../../component/attractionbuttons.dart';
 class AttractionsMapScreen extends StatelessWidget {
   final String title;

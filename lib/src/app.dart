@@ -18,25 +18,25 @@ import 'theme/theme.dart';
 
 final appShellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'app shell');
 
-class Bookstore extends StatefulWidget {
-  const Bookstore({super.key});
+class Riostore extends StatefulWidget {
+  const Riostore({super.key});
 
   @override
-  State<Bookstore> createState() => _BookstoreState();
+  State<Riostore> createState() => _RiostoreState();
 }
 
-class _BookstoreState extends State<Bookstore> {
-  final BookstoreAuth auth = BookstoreAuth();
+class _RiostoreState extends State<Riostore> {
+  final RiostoreAuth auth = RiostoreAuth();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme : appTheme,
+      theme: appTheme,
       builder: (context, child) {
         if (child == null) {
           throw ('No child in .router constructor builder');
         }
-        return BookstoreAuthScope(
+        return RiostoreAuthScope(
           notifier: auth,
           child: child,
         );
@@ -47,7 +47,7 @@ class _BookstoreState extends State<Bookstore> {
         initialLocation: '/splash',
         redirect: (context, state) {
           if (state.uri.toString() == '/') {
-            return '/attractions/map';
+            return '/converter';
           }
           return null;
         },
@@ -55,7 +55,7 @@ class _BookstoreState extends State<Bookstore> {
           ShellRoute(
             navigatorKey: appShellNavigatorKey,
             builder: (context, state, child) {
-              return BookstoreScaffold(
+              return RiostoreScaffold(
                 selectedIndex: switch (state.uri.path) {
                   var p when p.startsWith('/attractions/map') => 0,
                   var p when p.startsWith('/alphabet') => 1,
@@ -70,9 +70,7 @@ class _BookstoreState extends State<Bookstore> {
               ShellRoute(
                 pageBuilder: (context, state, child) {
                   return FadeTransitionPage<dynamic>(
-                    key: state.pageKey,
-                    child: child
-                  );
+                      key: state.pageKey, child: child);
                 },
                 routes: [
                   GoRoute(
@@ -101,7 +99,7 @@ class _BookstoreState extends State<Bookstore> {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
                     child: Builder(builder: (context) {
-                      return AlphabetScreen( );
+                      return AlphabetScreen();
                     }),
                   );
                 },
@@ -123,11 +121,7 @@ class _BookstoreState extends State<Bookstore> {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
                     child: Builder(builder: (context) {
-                      return ConverterScreen(
-                        onTap: (author) {
-                          GoRouter.of(context).go('/converter');
-                        },
-                      );
+                      return ConverterScreen();
                     }),
                   );
                 },

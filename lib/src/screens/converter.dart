@@ -3,26 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-
-import '../data/author.dart';
-import '../data/library.dart';
-import '../widgets/author_list.dart';
-
 class ConverterScreen extends StatelessWidget {
-  final String title;
-  final ValueChanged<Author> onTap;
-
   const ConverterScreen({
-    required this.onTap,
-    this.title = 'Converter',
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: AuthorList(
-          authors: libraryInstance.allConverter,
-          onTap: onTap,
-        ),
-      );
+  Widget build(BuildContext context) => Scaffold();
 }

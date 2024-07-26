@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../service/weather_service.dart';
 
-class BookstoreScaffold extends StatefulWidget {
+class RiostoreScaffold extends StatefulWidget {
   final Widget child;
   final int selectedIndex;
 
-  const BookstoreScaffold({
+  const RiostoreScaffold({
     required this.child,
     required this.selectedIndex,
     super.key,
   });
 
   @override
-  _BookstoreScaffoldState createState() => _BookstoreScaffoldState();
+  _RiostoreScaffoldState createState() => _RiostoreScaffoldState();
 }
 
-class _BookstoreScaffoldState extends State<BookstoreScaffold> {
+class _RiostoreScaffoldState extends State<RiostoreScaffold> {
   late Future<String> weatherFuture;
   final WeatherService weatherService = WeatherService();
 
