@@ -1,7 +1,6 @@
-import 'package:adaptive_navigation/adaptive_navigation.dart';
+import 'package:RioTrip/src/component/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../service/weather_service.dart';
 
 class RiostoreScaffold extends StatefulWidget {
   final Widget child;
@@ -18,88 +17,52 @@ class RiostoreScaffold extends StatefulWidget {
 }
 
 class _RiostoreScaffoldState extends State<RiostoreScaffold> {
-  late Future<String> weatherFuture;
-  final WeatherService weatherService = WeatherService();
-
-  @override
-  void initState() {
-    super.initState();
-    weatherFuture = weatherService.fetchWeather('Rio de Janeiro');
+  void _onItemTapped(int index) {
+    final goRouter = GoRouter.of(context);
+    switch (index) {
+      case 0:
+        goRouter.go('/attractions/map');
+        break;
+      case 1:
+        goRouter.go('/alphabet');
+        break;
+      case 2:
+        goRouter.go('/phrasebook');
+        break;
+      case 3:
+        goRouter.go('/converter');
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final goRouter = GoRouter.of(context);
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF012147), // Set the background color
-        // Use a Row to position weather info on the left and image at the right
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            FutureBuilder<String>(
-              future: weatherFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return SizedBox(
-                    height: 24, // Adjust height as needed for alignment
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                            text: '+31\'',
-                            style: TextStyle(color: Colors.white)),
-                        TextSpan(
-                            text: ' June 5, 12:00',
-                            style: TextStyle(color: Colors.white)),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Text(
-                    snapshot.data ?? 'Failed to load',
-                    style: TextStyle(fontSize: 14),
-                  );
-                }
-              },
-            ),
-            Image.asset(
-              'assets/images/appbartitle.png',
-              height: 40, // Adjust the height as needed
-            ),
-          ],
-        ),
-        centerTitle: true,
-      ),
-      body: AdaptiveNavigationScaffold(
-        selectedIndex: widget.selectedIndex,
-        body: widget.child,
-        onDestinationSelected: (idx) {
-          if (idx == 0) goRouter.go('/attractions/map');
-          if (idx == 1) goRouter.go('/alphabet');
-          if (idx == 2) goRouter.go('/phrasebook');
-          if (idx == 3) goRouter.go('/converter');
-        },
-        destinations: const [
-          AdaptiveScaffoldDestination(
-            title: 'Attractions',
-            icon: Icons.attractions,
+      appBar: const CustomAppBar(),
+      body: widget.child,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: widget.selectedIndex,
+        backgroundColor: const Color(0xFF012147), // Set the background color
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white, // Color for selected items
+        unselectedItemColor: Colors.grey, // Color for unselected items
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/attractions.png')),
+            label: 'Attractions',
           ),
-          AdaptiveScaffoldDestination(
-            title: 'Alphabet',
-            icon: Icons.sort_by_alpha,
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/alphabet.png')),
+            label: 'Alphabet',
           ),
-          AdaptiveScaffoldDestination(
-            title: 'Phrasebook',
-            icon: Icons.book,
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/phrasebook.png')),
+            label: 'Phrasebook',
           ),
-          AdaptiveScaffoldDestination(
-            title: 'Converter',
-            icon: Icons.currency_bitcoin,
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/converter.png')),
+            label: 'Converter',
           ),
         ],
       ),

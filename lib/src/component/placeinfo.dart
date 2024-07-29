@@ -19,7 +19,6 @@ class PlaceInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: placeBackgroundColor, // Set the background color here
-      padding: const EdgeInsets.all(8.0),
       margin: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

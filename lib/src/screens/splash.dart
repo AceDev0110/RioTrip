@@ -11,8 +11,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Redirect to /attractions after 0.5 seconds
-    Timer(Duration(milliseconds: 500), () {
+    // Redirect to /attractions after 2 seconds
+    Timer(Duration(milliseconds: 2000), () {
       final router = GoRouter.of(context);
       router.go('/attractions/map');
     });

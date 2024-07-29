@@ -5,6 +5,10 @@ const Color primaryColor = Color.fromRGBO(17, 63, 124, 1);
 const Color backgroundColor = Color(0xFF173558);
 const Color textColor = Colors.white;
 
+// for Attractions
+const Color positionButtonColor1 = Color.fromRGBO(255, 207, 12, 1);
+const Color positionButtonColor2 = Color.fromRGBO(1,33,71, 1);
+
 // for PlaceInfo
 const Color placeBackgroundColor = Color.fromRGBO(26, 67, 137, 1);
 const Color titleColor = Colors.white;
