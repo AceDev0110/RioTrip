@@ -58,6 +58,22 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    signingConfigs {
+        release {
+            keyAlias 'my-key-alias'
+            keyPassword '123456'
+            storeFile file('../../my-release-key.jks')
+            storePassword '123456'
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled false // Turn on minification to further optimize your app
+            shrinkResources false // Enables resource shrinking (can be true if using minifyEnabled true)
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 flutter {
