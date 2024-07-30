@@ -32,6 +32,11 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    defaultConfig {
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86' ,'x86_64'
+        }
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }

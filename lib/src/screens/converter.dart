@@ -67,11 +67,11 @@ class ConverterScreen extends StatelessWidget {
                   currency,
                   style: TextStyle(
                     fontSize: 16,
-                    color: isSelected ? currencySelectionColor : textColor,
+                    color: isSelected ? textColor : textColor,
                     fontWeight: isSelected ? FontWeight.w900 : FontWeight.w400,
-                    decoration: isSelected
-                        ? TextDecoration.underline
-                        : TextDecoration.none,
+                    // decoration: isSelected
+                    //     ? TextDecoration.underline
+                    //     : TextDecoration.none,
                   ),
                 ),
               ],
