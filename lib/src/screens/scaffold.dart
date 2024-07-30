@@ -1,51 +1,68 @@
-// Copyright 2021, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'package:adaptive_navigation/adaptive_navigation.dart';
+import 'package:RioTrip/src/component/customAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class BookstoreScaffold extends StatelessWidget {
+class RiostoreScaffold extends StatefulWidget {
   final Widget child;
   final int selectedIndex;
 
-  const BookstoreScaffold({
+  const RiostoreScaffold({
     required this.child,
     required this.selectedIndex,
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    final goRouter = GoRouter.of(context);
+  _RiostoreScaffoldState createState() => _RiostoreScaffoldState();
+}
 
+class _RiostoreScaffoldState extends State<RiostoreScaffold> {
+  void _onItemTapped(int index) {
+    final goRouter = GoRouter.of(context);
+    switch (index) {
+      case 0:
+        goRouter.go('/attractions/map');
+        break;
+      case 1:
+        goRouter.go('/alphabet');
+        break;
+      case 2:
+        goRouter.go('/phrasebook');
+        break;
+      case 3:
+        goRouter.go('/converter');
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: AdaptiveNavigationScaffold(
-        selectedIndex: selectedIndex,
-        body: child,
-        onDestinationSelected: (idx) {
-          if (idx == 0) goRouter.go('/books/popular');
-          if (idx == 1) goRouter.go('/authors');
-          if (idx == 2) goRouter.go('/authors');
-          if (idx == 3) goRouter.go('/settings');
-        },
-        destinations: const [
-          AdaptiveScaffoldDestination(
-            title: 'Attractions',
-            icon: Icons.attractions,
+      appBar: const CustomAppBar(),
+      body: widget.child,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: widget.selectedIndex,
+        backgroundColor: const Color(0xFF012147), // Set the background color
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.white, // Color for selected items
+        unselectedItemColor: Colors.grey, // Color for unselected items
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/attractions.png')),
+            label: 'Attractions',
           ),
-          AdaptiveScaffoldDestination(
-            title: 'Alphabet',
-            icon: Icons.sort_by_alpha,
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/alphabet.png')),
+            label: 'Alphabet',
           ),
-          AdaptiveScaffoldDestination(
-            title: 'Phrasebook',
-            icon: Icons.book,
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/phrasebook.png')),
+            label: 'Phrasebook',
           ),
-          AdaptiveScaffoldDestination(
-            title: 'Converter',
-            icon: Icons.currency_bitcoin,
+          BottomNavigationBarItem(
+            icon: ImageIcon(AssetImage('assets/category/converter.png')),
+            label: 'Converter',
           ),
         ],
       ),

@@ -2,42 +2,41 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:RioTrip/src/screens/alphabet.dart';
+import 'package:RioTrip/src/screens/attarctions/map.dart';
+import 'package:RioTrip/src/screens/attarctions/list.dart';
+import 'package:RioTrip/src/screens/converter.dart';
+import 'package:RioTrip/src/screens/phrasebook.dart';
+import 'package:RioTrip/src/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'auth.dart';
-import 'data.dart';
-import 'screens/author_details.dart';
-import 'screens/authors.dart';
-import 'screens/book_details.dart';
-import 'screens/books.dart';
 import 'screens/scaffold.dart';
-import 'screens/settings.dart';
-import 'screens/sign_in.dart';
-import 'widgets/book_list.dart';
 import 'widgets/fade_transition_page.dart';
+import 'theme/theme.dart';
 
 final appShellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'app shell');
-final booksNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'books shell');
 
-class Bookstore extends StatefulWidget {
-  const Bookstore({super.key});
+class Riostore extends StatefulWidget {
+  const Riostore({super.key});
 
   @override
-  State<Bookstore> createState() => _BookstoreState();
+  State<Riostore> createState() => _RiostoreState();
 }
 
-class _BookstoreState extends State<Bookstore> {
-  final BookstoreAuth auth = BookstoreAuth();
+class _RiostoreState extends State<Riostore> {
+  final RiostoreAuth auth = RiostoreAuth();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: appTheme,
       builder: (context, child) {
         if (child == null) {
           throw ('No child in .router constructor builder');
         }
-        return BookstoreAuthScope(
+        return RiostoreAuthScope(
           notifier: auth,
           child: child,
         );
@@ -45,11 +44,10 @@ class _BookstoreState extends State<Bookstore> {
       routerConfig: GoRouter(
         refreshListenable: auth,
         debugLogDiagnostics: true,
-        initialLocation: '/books/popular',
+        initialLocation: '/splash',
         redirect: (context, state) {
-          final signedIn = BookstoreAuth.of(context).signedIn;
-          if (state.uri.toString() != '/sign-in' && !signedIn) {
-            return '/sign-in';
+          if (state.uri.toString() == '/') {
+            return '/converter';
           }
           return null;
         },
@@ -57,11 +55,12 @@ class _BookstoreState extends State<Bookstore> {
           ShellRoute(
             navigatorKey: appShellNavigatorKey,
             builder: (context, state, child) {
-              return BookstoreScaffold(
+              return RiostoreScaffold(
                 selectedIndex: switch (state.uri.path) {
-                  var p when p.startsWith('/books') => 0,
-                  var p when p.startsWith('/authors') => 1,
-                  var p when p.startsWith('/settings') => 2,
+                  var p when p.startsWith('/attractions/map') => 0,
+                  var p when p.startsWith('/alphabet') => 1,
+                  var p when p.startsWith('/phrasebook') => 2,
+                  var p when p.startsWith('/converter') => 3,
                   _ => 0,
                 },
                 child: child,
@@ -71,196 +70,70 @@ class _BookstoreState extends State<Bookstore> {
               ShellRoute(
                 pageBuilder: (context, state, child) {
                   return FadeTransitionPage<dynamic>(
-                    key: state.pageKey,
-                    // Use a builder to get the correct BuildContext
-                    // TODO (johnpryan): remove when https://github.com/flutter/flutter/issues/108177 lands
-                    child: Builder(builder: (context) {
-                      return BooksScreen(
-                        onTap: (idx) {
-                          GoRouter.of(context).go(switch (idx) {
-                            0 => '/books/popular',
-                            1 => '/books/new',
-                            2 => '/books/all',
-                            _ => '/books/popular',
-                          });
-                        },
-                        selectedIndex: switch (state.uri.path) {
-                          var p when p.startsWith('/books/popular') => 0,
-                          var p when p.startsWith('/books/new') => 1,
-                          var p when p.startsWith('/books/all') => 2,
-                          _ => 0,
-                        },
-                        child: child,
-                      );
-                    }),
-                  );
+                      key: state.pageKey, child: child);
                 },
                 routes: [
                   GoRoute(
-                    path: '/books/popular',
+                    path: '/attractions/map',
                     pageBuilder: (context, state) {
                       return FadeTransitionPage<dynamic>(
-                        // Use a builder to get the correct BuildContext
-                        // TODO (johnpryan): remove when https://github.com/flutter/flutter/issues/108177 lands
                         key: state.pageKey,
-                        child: Builder(
-                          builder: (context) {
-                            return BookList(
-                              books: libraryInstance.popularBooks,
-                              onTap: (book) {
-                                GoRouter.of(context)
-                                    .go('/books/popular/book/${book.id}');
-                              },
-                            );
-                          },
-                        ),
+                        child: AttractionsMapScreen(),
                       );
                     },
-                    routes: [
-                      GoRoute(
-                        path: 'book/:bookId',
-                        parentNavigatorKey: appShellNavigatorKey,
-                        builder: (context, state) {
-                          return BookDetailsScreen(
-                            book: libraryInstance
-                                .getBook(state.pathParameters['bookId'] ?? ''),
-                          );
-                        },
-                      ),
-                    ],
                   ),
                   GoRoute(
-                    path: '/books/new',
+                    path: '/attractions/list',
                     pageBuilder: (context, state) {
                       return FadeTransitionPage<dynamic>(
                         key: state.pageKey,
-                        // Use a builder to get the correct BuildContext
-                        // TODO (johnpryan): remove when https://github.com/flutter/flutter/issues/108177 lands
-                        child: Builder(
-                          builder: (context) {
-                            return BookList(
-                              books: libraryInstance.newBooks,
-                              onTap: (book) {
-                                GoRouter.of(context)
-                                    .go('/books/new/book/${book.id}');
-                              },
-                            );
-                          },
-                        ),
+                        child: AttractionsListScreen(),
                       );
                     },
-                    routes: [
-                      GoRoute(
-                        path: 'book/:bookId',
-                        parentNavigatorKey: appShellNavigatorKey,
-                        builder: (context, state) {
-                          return BookDetailsScreen(
-                            book: libraryInstance
-                                .getBook(state.pathParameters['bookId'] ?? ''),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  GoRoute(
-                    path: '/books/all',
-                    pageBuilder: (context, state) {
-                      return FadeTransitionPage<dynamic>(
-                        key: state.pageKey,
-                        // Use a builder to get the correct BuildContext
-                        // TODO (johnpryan): remove when https://github.com/flutter/flutter/issues/108177 lands
-                        child: Builder(
-                          builder: (context) {
-                            return BookList(
-                              books: libraryInstance.allBooks,
-                              onTap: (book) {
-                                GoRouter.of(context)
-                                    .go('/books/all/book/${book.id}');
-                              },
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    routes: [
-                      GoRoute(
-                        path: 'book/:bookId',
-                        parentNavigatorKey: appShellNavigatorKey,
-                        builder: (context, state) {
-                          return BookDetailsScreen(
-                            book: libraryInstance
-                                .getBook(state.pathParameters['bookId'] ?? ''),
-                          );
-                        },
-                      ),
-                    ],
                   ),
                 ],
               ),
               GoRoute(
-                path: '/authors',
+                path: '/alphabet',
                 pageBuilder: (context, state) {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
                     child: Builder(builder: (context) {
-                      return AuthorsScreen(
-                        onTap: (author) {
-                          GoRouter.of(context)
-                              .go('/authors/author/${author.id}');
-                        },
-                      );
+                      return AlphabetScreen();
                     }),
                   );
                 },
-                routes: [
-                  GoRoute(
-                    path: 'author/:authorId',
-                    builder: (context, state) {
-                      final author = libraryInstance.allAuthors.firstWhere(
-                          (author) =>
-                              author.id ==
-                              int.parse(state.pathParameters['authorId']!));
-                      // Use a builder to get the correct BuildContext
-                      // TODO (johnpryan): remove when https://github.com/flutter/flutter/issues/108177 lands
-                      return Builder(builder: (context) {
-                        return AuthorDetailsScreen(
-                          author: author,
-                          onBookTapped: (book) {
-                            GoRouter.of(context)
-                                .go('/books/all/book/${book.id}');
-                          },
-                        );
-                      });
-                    },
-                  )
-                ],
               ),
               GoRoute(
-                path: '/settings',
+                path: '/phrasebook',
                 pageBuilder: (context, state) {
                   return FadeTransitionPage<dynamic>(
                     key: state.pageKey,
-                    child: const SettingsScreen(),
+                    child: Builder(builder: (context) {
+                      return PhrasebookScreen();
+                    }),
+                  );
+                },
+              ),
+              GoRoute(
+                path: '/converter',
+                pageBuilder: (context, state) {
+                  return FadeTransitionPage<dynamic>(
+                    key: state.pageKey,
+                    child: Builder(builder: (context) {
+                      return ConverterScreen();
+                    }),
                   );
                 },
               ),
             ],
           ),
           GoRoute(
-            path: '/sign-in',
+            path: '/splash',
             builder: (context, state) {
-              // Use a builder to get the correct BuildContext
-              // TODO (johnpryan): remove when https://github.com/flutter/flutter/issues/108177 lands
               return Builder(
                 builder: (context) {
-                  return SignInScreen(
-                    onSignIn: (value) async {
-                      final router = GoRouter.of(context);
-                      await BookstoreAuth.of(context)
-                          .signIn(value.username, value.password);
-                      router.go('/books/popular');
-                    },
-                  );
+                  return SplashScreen();
                 },
               );
             },
